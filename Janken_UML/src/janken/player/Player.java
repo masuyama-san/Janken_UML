@@ -9,6 +9,6 @@ public interface Player {
 	public int getHand();
 	
 	//じゃんけんの手選択処理
-	public int selectHand() throws Exception;
+	public void selectHand() throws IllegalArgumentException;
 
 }
