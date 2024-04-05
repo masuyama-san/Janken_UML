@@ -3,7 +3,9 @@ package main;
 import java.util.ArrayList;
 import java.util.List;
 
+import janken.JankenParam;
 import janken.player.Player;
+import janken.player.impl.CpuPlayerImpl;
 import janken.player.impl.HumanPlayerImpl;
 import util.keybord.Keybord;
 import util.properties.MessageProperties;
@@ -36,17 +38,29 @@ public class JankenApprication {
 
 					System.out.println(MessageProperties.getMessage("janken.msg.player.count.error"));
 				}
-				
+
+				while (true) {
+
+					app.selectJankenHand();
+
+					app.winHand = app.judge();
+					if (app.winHand != JankenParam.DRAW.getInt()) {
+						break;
+					}
+
+					System.out.println(MessageProperties.getMessage("janken.msg.game.draw"));
+				}
+
 				app.viewWinner();
-				
-				if(app.gameContinue() == false) {
+
+				if (app.gameContinue() == false) {
 					break;
 				}
-				
+
 			}
-			
+
 			System.out.println(MessageProperties.getMessage("janken.msg.end"));
-			
+
 		} catch (Exception e) {
 			System.out.println("なんかエラー出てますよ");
 
@@ -89,13 +103,38 @@ public class JankenApprication {
 	}
 
 	//CPUプレイヤーオブジェクト生成メソッド
-	private void createCpuPlayer() {
+	private void createCpuPlayer() throws Exception {
+
+		while (true) {
+
+			try {
+
+				System.out.println(MessageProperties.getMessage("janken.msg.create.cpu"));
+				int value = Keybord.getInt();
+
+				for (int i = 0; i < value; i++) {
+					Player player = new CpuPlayerImpl(
+							MessageProperties.getMessage("janken.msg.playername.cpu") + (i + 1));
+					playerList.add(player);
+				}
+
+				break;
+
+			} catch (Exception e) {
+				System.out.println(MessageProperties.getMessage("msg.retype"));
+			}
+		}
 
 	}
 
 	//プレイヤー全体の数をチェックするメソッド
 	private boolean checkPlayerCount() {
-		return true;
+
+		if (playerList.size() >= 2) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	//じゃんけんの手を選択するメソッド
