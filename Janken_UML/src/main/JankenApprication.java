@@ -129,6 +129,7 @@ public class JankenApprication {
 
 	//プレイヤー全体の数をチェックするメソッド
 	private boolean checkPlayerCount() {
+		
 		return true;
 	}
 
