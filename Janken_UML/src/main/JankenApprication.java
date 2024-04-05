@@ -1,8 +1,12 @@
 package main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import janken.player.Player;
+import janken.player.impl.HumanPlayerImpl;
+import util.keybord.Keybord;
+import util.properties.MessageProperties;
 
 public class JankenApprication {
 
@@ -12,16 +16,76 @@ public class JankenApprication {
 
 	public static void main(String[] args) {
 
+		JankenApprication app = new JankenApprication();
+
+		try {
+			while (true) {
+				while (true) {
+
+					System.out.println(MessageProperties.getMessage("janken.msg.start"));
+
+					app.initialization();
+
+					app.createHumanPlayer();
+
+					app.createCpuPlayer();
+
+					if (app.checkPlayerCount()) {
+						break;
+					}
+
+					System.out.println(MessageProperties.getMessage("janken.msg.player.count.error"));
+				}
+				
+				app.viewWinner();
+				
+				if(app.gameContinue() == false) {
+					break;
+				}
+				
+			}
+			
+			System.out.println(MessageProperties.getMessage("janken.msg.end"));
+			
+		} catch (Exception e) {
+			System.out.println("なんかエラー出てますよ");
+
+		}
 	}
 
 	//ゲーム初期化用メソッド
 	private void initialization() {
 
+		if (this.playerList == null) {
+			this.playerList = new ArrayList<Player>();
+		} else {
+			this.playerList.clear();
+		}
+
 	}
 
 	//人間プレイヤーオブジェクト生成メソッド
-	private void createHumanPlayer() {
+	private void createHumanPlayer() throws Exception {
 
+		while (true) {
+
+			try {
+
+				System.out.println(MessageProperties.getMessage("janken.msg.create.human"));
+				int value = Keybord.getInt();
+
+				for (int i = 0; i < value; i++) {
+					Player player = new HumanPlayerImpl(
+							MessageProperties.getMessage("janken.msg.playername.human") + (i + 1));
+					playerList.add(player);
+				}
+
+				break;
+
+			} catch (Exception e) {
+				System.out.println(MessageProperties.getMessage("msg.retype"));
+			}
+		}
 	}
 
 	//CPUプレイヤーオブジェクト生成メソッド
@@ -31,7 +95,7 @@ public class JankenApprication {
 
 	//プレイヤー全体の数をチェックするメソッド
 	private boolean checkPlayerCount() {
-		return false;
+		return true;
 	}
 
 	//じゃんけんの手を選択するメソッド
