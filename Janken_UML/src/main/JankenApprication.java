@@ -129,8 +129,12 @@ public class JankenApprication {
 
 	//プレイヤー全体の数をチェックするメソッド
 	private boolean checkPlayerCount() {
-		
-		return true;
+
+		if (playerList.size() >= 2) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	//じゃんけんの手を選択するメソッド
