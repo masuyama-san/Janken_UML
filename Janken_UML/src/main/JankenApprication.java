@@ -12,8 +12,14 @@ import util.properties.MessageProperties;
 
 public class JankenApprication {
 
+	/**
+	 * 【勝利者の手】格納用変数
+	*/
 	private int winHand;
 
+	/**
+	 * じゃんけんプレイヤーオブジェクトリスト
+	*/
 	private List<Player> playerList;
 
 	public static void main(String[] args) {
@@ -67,7 +73,9 @@ public class JankenApprication {
 		}
 	}
 
-	//ゲーム初期化用メソッド
+	/**
+	 * ゲーム初期化用メソッド
+	*/
 	private void initialization() {
 
 		if (this.playerList == null) {
@@ -78,7 +86,9 @@ public class JankenApprication {
 
 	}
 
-	//人間プレイヤーオブジェクト生成メソッド
+	/**
+	 * 人間プレイヤーオブジェクト生成メソッド
+	*/
 	private void createHumanPlayer() throws Exception {
 
 		while (true) {
@@ -194,9 +204,24 @@ public class JankenApprication {
 		System.out.println(MessageProperties.getMessage("janken.msg.game.winner", name));
 	}
 
-	//ゲーム継続判定処理
-	private boolean gameContinue() {
-		return false;
+	/**
+	 * ゲーム継続判定処理
+	 * @throws Exception 
+	*/
+	private boolean gameContinue() throws Exception {
+		while (true) {
+			try {
+				System.out.println(MessageProperties.getMessage("janken.msg.game.continue"));
+				int num = Keybord.getInt(1, 2);
+				if (num == 1) {
+					return true;
+				} else if (num == 2) {
+					return false;
+				}
+			} catch (Exception e) {
+				System.out.println(MessageProperties.getMessage("msg.retype"));
+			}
+		}
 	}
 
 	public List<Player> getPlayerList() {
