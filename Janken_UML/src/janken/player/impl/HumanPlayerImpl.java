@@ -29,7 +29,7 @@ public class HumanPlayerImpl implements Player {
 	public void selectHand() throws Exception {
 		while (true) {
 			try {
-				System.out.println(MessageProperties.getMessage(""));
+				System.out.println(MessageProperties.getMessage("janken.msg.select.hand.human"));
 				int input = Keybord.getInt(1, 3);
 				switch (JankenParam.getEnum(input)) {
 				case ROCK:
@@ -44,6 +44,7 @@ public class HumanPlayerImpl implements Player {
 				default:
 					throw new Exception(MessageProperties.getMessage("error.arg"));
 				}
+				break;
 
 			} catch (Exception e) {
 				System.out.println(MessageProperties.getMessage("error.arg"));

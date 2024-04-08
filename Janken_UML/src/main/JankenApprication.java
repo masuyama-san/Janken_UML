@@ -102,7 +102,9 @@ public class JankenApprication {
 		}
 	}
 
-	//CPUプレイヤーオブジェクト生成メソッド
+	/**
+	 * CPUプレイヤーオブジェクト生成メソッド
+	*/
 	private void createCpuPlayer() throws Exception {
 
 		while (true) {
@@ -127,7 +129,9 @@ public class JankenApprication {
 
 	}
 
-	//プレイヤー全体の数をチェックするメソッド
+	/**
+	 * プレイヤー全体の数をチェックするメソッド
+	*/
 	private boolean checkPlayerCount() {
 
 		if (playerList.size() >= 2) {
@@ -137,24 +141,78 @@ public class JankenApprication {
 		}
 	}
 
-	//じゃんけんの手を選択するメソッド
-	private void selectJankenHand() {
-
+	/**
+	 * じゃんけんの手を選択するメソッド
+	*/
+	private void selectJankenHand() throws Exception {
+		for (int i = 0; i < playerList.size(); i++) {
+			playerList.get(i).selectHand();
+		}
 	}
 
-	//じゃんけん判定処理
+	/**
+	 * じゃんけん判定処理
+	*/
 	private int judge() {
-		return 0;
+
+		boolean rock = false;
+		boolean scissors = false;
+		boolean paper = false;
+
+		for (Player list : playerList) {
+			if (list.getHand() == JankenParam.ROCK.getInt()) {
+				rock = true;
+			} else if (list.getHand() == JankenParam.SCISSORS.getInt()) {
+				scissors = true;
+			} else if (list.getHand() == JankenParam.PAPER.getInt()) {
+				paper = true;
+			}
+		}
+
+		if (rock == true && scissors == true && paper == false) {
+			return JankenParam.ROCK.getInt();
+		} else if (rock == false && scissors == true && paper == true) {
+			return JankenParam.SCISSORS.getInt();
+		} else if (rock == true && scissors == false && paper == true) {
+			return JankenParam.PAPER.getInt();
+		} else {
+			return JankenParam.DRAW.getInt();
+		}
+
 	}
 
-	//勝利者表示処理
-	private void viewWinner() {
-
+	/**
+	 * 勝利者表示処理
+	*/
+	private void viewWinner() throws Exception {
+		String name = "";
+		for (Player list : playerList) {
+			if (winHand == list.getHand()) {
+				name += list.getName() + " ";
+			}
+		}
+		System.out.println(MessageProperties.getMessage("janken.msg.game.winner", name));
 	}
 
 	//ゲーム継続判定処理
 	private boolean gameContinue() {
 		return false;
+	}
+
+	public List<Player> getPlayerList() {
+		return playerList;
+	}
+
+	public void setPlayerList(List<Player> playerList) {
+		this.playerList = playerList;
+	}
+
+	public int getWinHand() {
+		return winHand;
+	}
+
+	public void setWinHand(int winHand) {
+		this.winHand = winHand;
 	}
 
 }
