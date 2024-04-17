@@ -13,7 +13,7 @@ import util.properties.MessageProperties;
 public class JankenApprication {
 
 	/**
-	 * 【勝利者の手】格納用変数
+	 * 勝利者の手_格納用変数
 	*/
 	private int winHand;
 
@@ -68,7 +68,7 @@ public class JankenApprication {
 			System.out.println(MessageProperties.getMessage("janken.msg.end"));
 
 		} catch (Exception e) {
-			System.out.println("なんかエラー出てますよ");
+			System.out.println("エラー");
 
 		}
 	}
